@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/xjarvik/face-annotator-core-ml/issues"
   },
-  "homepage": "https://github.com/xjarvik/face-annotator-core-ml#readme"
+  "homepage": "https://github.com/xjarvik/face-annotator-core-ml#readme",
+  "dependencies": {
+    "@tensorflow-models/blazeface": "^0.0.7",
+    "@tensorflow/tfjs": "^3.3.0",
+    "@tensorflow/tfjs-converter": "^3.3.0",
+    "@tensorflow/tfjs-core": "^3.3.0",
+    "image-pixels": "^2.2.2"
+  }
 }

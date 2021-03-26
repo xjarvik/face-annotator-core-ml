@@ -1,9 +1,22 @@
 const tf = require("@tensorflow/tfjs")
 const args = process.argv.slice(2)
 const fs = require("fs")
+const readline = require("readline")
 const array = []
 const blazeface = require("@tensorflow-models/blazeface")
 const pixels = require("image-pixels")
+
+const askQuestion = function(query){
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    })
+
+    return new Promise(resolve => rl.question(query, ans => {
+        rl.close()
+        resolve(ans)
+    }))
+}
 
 const app = async function(){
     const model = await blazeface.load()
@@ -56,12 +69,33 @@ const app = async function(){
     console.log("\nCreating JSON file...")
 
     if(fs.existsSync(args[0] + "annotations.json")){
-        var count = 1
-        do{
-            count++
+        const createAnnotationFileNr = function(){
+            var count = 1
+            do{
+                count++
+            }
+            while(fs.existsSync(args[0] + "annotations" + count + ".json"))
+            fs.writeFileSync(args[0] + "annotations" + count + ".json", JSON.stringify(array))
         }
-        while(fs.existsSync(args[0] + "annotations" + count + ".json"))
-        fs.writeFileSync(args[0] + "annotations" + count + ".json", JSON.stringify(array))
+
+        const existing = JSON.parse(fs.readFileSync(args[0] + "annotations.json"))
+
+        if(Array.isArray(existing)){
+            var answer = ""
+            do{
+                answer = await askQuestion("A file named annotations.json already exists in this folder.\nDo you want to append the annotations to this file? (y/n)\nIf you answer no, a new file will be created.\n")
+            }
+            while(answer != "Y" && answer != "y" && answer != "N" && answer != "n")
+            if(answer == "Y" || answer == "y"){
+                fs.writeFileSync(args[0] + "annotations.json", JSON.stringify(existing.concat(array)))
+            }
+            else{
+                createAnnotationFileNr()
+            }
+        }
+        else{
+            createAnnotationFileNr()
+        }
     }
     else{
         fs.writeFileSync(args[0] + "annotations.json", JSON.stringify(array))

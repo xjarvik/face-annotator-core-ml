@@ -38,3 +38,7 @@ A tool that detects faces and automatically annotates the size and coordinates o
 
 1. Clone the repo and run `npm install`.
 2. Run the app: `node app.js /path/to/images label`. The generated JSON file will be placed in the same folder as your images. If a file named annotations.json already exists in the folder, the script will ask whether you want to append the annotations in that file with the annotations you just created.
+
+# Notes
+
+For compatibility, this tool uses the base `@tensorflow/tfjs` package. For increased performance, install `@tensorflow/tfjs-node` or `@tensorflow/tfjs-node-gpu`. Both of these require Python to be installed. You should also change the first line in `app.js` to require one of these packages.

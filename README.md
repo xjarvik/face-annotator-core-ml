@@ -41,4 +41,4 @@ A tool that detects faces and automatically annotates the size and coordinates o
 
 # Notes
 
-For compatibility, this tool uses the base `@tensorflow/tfjs` package. For increased performance, install `@tensorflow/tfjs-node` or `@tensorflow/tfjs-node-gpu`. Both of these require Python to be installed. You should also change the first line in `app.js` to require one of these packages.
+For compatibility, this tool uses the base `@tensorflow/tfjs` package. For increased performance, install `@tensorflow/tfjs-node` or `@tensorflow/tfjs-node-gpu`. Both of these require Python to be installed (and CUDA for the latter). You should also change the first line in `app.js` to require one of these packages.
